@@ -1,4 +1,4 @@
-import puppeteer, { Page } from "puppeteer";
+import puppeteer, { Browser, Page } from "puppeteer";
 import { AnyNode, Cheerio, CheerioAPI, load } from "cheerio";
 import { SetCodes, SetCodesSearch } from "./sets";
 
@@ -6,14 +6,25 @@ const PokemonCardLinePattern = /\d{1,2} [\w' {}-]+ [A-z-]+ \d{1,3}( PH)?$/;
 
 export async function convertAsync(input: string) {
     const lines = input.split('\n');
-    const output: string[] = [];
+    const output: { index: number, data: string }[] = [];
 
     const puppet = await puppeteer.launch({
         headless: 'new',
         args: puppetArgs,
     });
 
-    for await (const line of lines) {
+    await searchAndPopulateAsync(lines, puppet, output);
+
+    puppet.close();
+
+    return output
+        .sort((a,b) => a.index < b.index ? -1 : 1)
+        .map((e) => e.data)
+        .join('\n');
+}
+
+function searchAndPopulateAsync(lines: string[], puppet: Browser, output: { index: number, data: string }[]): Promise<void[]> {
+    return Promise.all(lines.map(async (line, index) => {
         let workingCopy = line;
 
         if (line.match(PokemonCardLinePattern)) {
@@ -28,13 +39,12 @@ export async function convertAsync(input: string) {
 
             const page = await puppet.newPage();
 
-            output.push(amount + await getLineAsync(card, page))
+            output.push({
+                index,
+                data: amount + await getLineAsync(card, page)
+            });
         }
-    }
-
-    puppet.close();
-
-    return output.join('\n');
+    }));
 }
 
 async function getLineAsync(card: string, page: Page) {
