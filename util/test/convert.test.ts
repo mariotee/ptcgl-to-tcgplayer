@@ -24,7 +24,7 @@ Trainer: 13
 4 Ultra Ball CRZ 146 PH
 3 Nest Ball SVI 181 PH
 1 Hisuian Heavy Ball ASR 146 PH
-4 Judge SVI 176 PH`
+4 Judge SVI 176 PH`;
     
         const output = `4 Magnemite [SV01]
 4 Magnezone ex - 065/198 [SV01]
@@ -44,7 +44,7 @@ Trainer: 13
 4 Ultra Ball [CRZ]
 3 Nest Ball - 181/198 [SV01]
 1 Hisuian Heavy Ball [SWSH10]
-4 Judge [SV01]`
+4 Judge [SV01]`;
 
         expect(await convertAsync(input)).toBe(output);
     });    
@@ -63,7 +63,7 @@ Trainer: 13
 1 Mew VMAX FST 114
 1 Mew VMAX FST 268
 1 Mew VMAX FST 269
-1 Mew VMAX LOR-TG 30`
+1 Mew VMAX LOR-TG 30`;
 
     const output = `1 Mew [CLB]
 2 Surfing Pikachu VMAX [CLB]
@@ -117,8 +117,7 @@ Trainer: 18
 Energy: 2
 4 Double Turbo Energy BRS 151 PH
 
-Total Cards: 60
-        `
+Total Cards: 60`;
     
         const output = `1 Manaphy [CRZ:GG]
 2 Gengar [SWSH11: TG]
@@ -146,7 +145,7 @@ Total Cards: 60
 1 Pal Pad [SV01]
 4 Ultra Ball [CRZ]
 2 Serena [SWSH12]
-4 Double Turbo Energy [SWSH09]`
+4 Double Turbo Energy [SWSH09]`;
 
         expect(await convertAsync(input)).toBe(output);
     });   

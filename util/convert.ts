@@ -41,6 +41,7 @@ function searchAndPopulateAsync(lines: string[], puppet: Browser, output: { inde
             const card = parts.slice(1).join(' ');
 
             const page = await puppet.newPage();
+            page.setDefaultNavigationTimeout(0);
 
             output.push({
                 index,
@@ -92,7 +93,7 @@ function getProductText(node: Cheerio<AnyNode>) {
         .parent()
         .children('.search-result__title')
         .first()
-        .text()
+        .text();
 }
 
 const puppetArgs = [
