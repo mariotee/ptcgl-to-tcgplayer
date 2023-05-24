@@ -11,6 +11,9 @@ export async function convertAsync(input: string) {
     const puppet = await puppeteer.launch({
         headless: 'new',
         args: puppetArgs,
+        executablePath: process.env.NODE_ENV === 'production'
+            ? '/usr/bin/google-chrome'
+            : undefined
     });
 
     await searchAndPopulateAsync(lines, puppet, output);
