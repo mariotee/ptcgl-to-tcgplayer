@@ -63,7 +63,9 @@ Trainer: 13
 1 Mew VMAX FST 114
 1 Mew VMAX FST 268
 1 Mew VMAX FST 269
-1 Mew VMAX LOR-TG 30`;
+1 Mew VMAX LOR-TG 30
+2 Mimikyu ex PR-SV 4
+1 Sprigatito PR-SV 1`;
 
     const output = `1 Mew [CLB]
 2 Surfing Pikachu VMAX [CLB]
@@ -78,7 +80,9 @@ Trainer: 13
 1 Mew VMAX [SWSH08]
 1 Mew VMAX (Secret) [SWSH08]
 1 Mew VMAX (Alternate Art Secret) [SWSH08]
-1 Mew VMAX (Secret) [SWSH11: TG]`;
+1 Mew VMAX (Secret) [SWSH11: TG]
+2 Mimikyu ex [SV]
+1 Sprigatito [SV]`;
 
     expect(await convertAsync(input)).toBe(output);
     });
