@@ -3,6 +3,7 @@ import { AnyNode, Cheerio, CheerioAPI, load } from "cheerio";
 import { SetCodes, SetCodesSearch } from "./sets";
 
 const PokemonCardLinePattern = /\d{1,2} [\w' {}-]+ [A-z-]+ \d{1,3}( PH)?$/;
+const BasicEnergyPattern = /\d{1,2} Basic.+Energy.+( PH)?$/;
 
 export async function convertAsync(input: string) {
     const lines = input.split('\n');
@@ -28,7 +29,11 @@ export async function convertAsync(input: string) {
 
 function searchAndPopulateAsync(lines: string[], puppet: Browser, output: { index: number, data: string }[]): Promise<void[]> {
     return Promise.all(lines.map(async (line, index) => {
-        let workingCopy = line;
+        let workingCopy = line.replace('* ','');
+
+        if (line.match(BasicEnergyPattern)) {
+            return;
+        }
 
         if (line.match(PokemonCardLinePattern)) {
             if (line.endsWith("PH")) {
